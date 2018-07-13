@@ -64,7 +64,6 @@ set(TERMINALPP_CORE_SOURCE_FILES
     src/ansi/mouse.cpp
     src/attribute.cpp
     src/canvas.cpp
-    src/canvas_view.cpp
     src/character_set.cpp
     src/colour.cpp
     src/encoder.cpp
@@ -73,6 +72,7 @@ set(TERMINALPP_CORE_SOURCE_FILES
     src/element.cpp
     src/extent.cpp
     src/point.cpp
+    src/render_surface.cpp
     src/screen.cpp
     src/string.cpp
     src/virtual_key.cpp
@@ -93,7 +93,6 @@ set(TERMINALPP_CORE_INCLUDE_FILES
     include/terminalpp/behaviour.hpp
     include/terminalpp/colour.hpp
     include/terminalpp/canvas.hpp
-    include/terminalpp/canvas_view.hpp
     include/terminalpp/character_set.hpp
     include/terminalpp/core.hpp
     include/terminalpp/effect.hpp
@@ -102,6 +101,8 @@ set(TERMINALPP_CORE_INCLUDE_FILES
     include/terminalpp/extent.hpp
     include/terminalpp/glyph.hpp
     include/terminalpp/point.hpp
+    include/terminalpp/render_surface.hpp
+    include/terminalpp/render_surface_capabilities.hpp
     include/terminalpp/screen.hpp
     include/terminalpp/string.hpp
     include/terminalpp/terminal.hpp
@@ -262,7 +263,6 @@ if (GTEST_FOUND)
         test/ansi_terminal_string_test.cpp
         test/attribute_test.cpp
         test/canvas_test.cpp
-        test/canvas_view_test.cpp
         test/character_set_test.cpp
         test/colour_test.cpp
         test/control_sequence_test.cpp
@@ -276,6 +276,8 @@ if (GTEST_FOUND)
         test/manip_test.cpp
         test/mouse_test.cpp
         test/point_test.cpp
+        test/render_surface_test.cpp
+        test/render_surface_capabilities_test.cpp
         test/screen_test.cpp
         test/string_test.cpp
         test/virtual_key_test.cpp

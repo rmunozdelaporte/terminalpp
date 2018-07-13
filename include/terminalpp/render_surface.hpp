@@ -1,5 +1,6 @@
 #pragma once
 
+#include "terminalpp/render_surface_capabilities.hpp"
 #include "terminalpp/element.hpp"
 #include "terminalpp/extent.hpp"
 #include <iosfwd>
@@ -12,7 +13,7 @@ class canvas;
 /// \brief A sub-view into a canvas that only allows reading and writing
 /// to a its elements; not operations that would affect the entire canvas.
 //* =========================================================================
-class TERMINALPP_EXPORT canvas_view
+class TERMINALPP_EXPORT render_surface
 {
 public :
     //* =====================================================================
@@ -25,7 +26,7 @@ public :
         // CONSTRUCTOR
         // ==================================================================
         row_proxy(
-            canvas_view &cvs, coordinate_type column, coordinate_type row);
+            render_surface &cvs, coordinate_type column, coordinate_type row);
 
         // ==================================================================
         // OPERATOR=
@@ -48,7 +49,7 @@ public :
         operator element const &() const;
 
     private :
-        canvas_view &canvas_;
+        render_surface &canvas_;
         coordinate_type column_;
         coordinate_type row_;
     };
@@ -62,7 +63,7 @@ public :
         // ==================================================================
         // CONSTRUCTOR
         // ==================================================================
-        column_proxy(canvas_view &cvs, coordinate_type column);
+        column_proxy(render_surface &cvs, coordinate_type column);
 
         // ==================================================================
         // OPERATOR[]
@@ -70,7 +71,7 @@ public :
         row_proxy operator[](coordinate_type row);
 
     private :
-        canvas_view &canvas_;
+        render_surface &canvas_;
         coordinate_type column_;
     };
 
@@ -83,7 +84,7 @@ public :
         // ==================================================================
         // CONSTRUCTOR
         // ==================================================================
-        const_column_proxy(canvas_view const &cvs, coordinate_type column);
+        const_column_proxy(render_surface const &cvs, coordinate_type column);
 
         // ==================================================================
         // OPERATOR[]
@@ -91,14 +92,28 @@ public :
         element const &operator[](coordinate_type row) const;
 
     private :
-        canvas_view const &canvas_;
+        render_surface const &canvas_;
         coordinate_type column_;
     };
 
     //* =====================================================================
     /// \brief Constructor
     //* =====================================================================
-    explicit canvas_view(canvas &cvs);
+    explicit render_surface(canvas &cvs);
+
+    //* =====================================================================
+    //\ brief Constructor with explicit render surface capabilities
+    //* =====================================================================
+    render_surface(
+        canvas &cvs,
+        render_surface_capabilities const &capabilities);
+
+    //* =====================================================================
+    /// \brief Returns true if the surface is known to support unicode.
+    /// characters.  Attempting to render unicode on surfaces that do not
+    /// support unicode may have unexpected results.
+    //* =====================================================================
+    bool supports_unicode() const;
 
     //* =====================================================================
     /// \brief Offsets the canvas by a certain amount, causing it to become
@@ -140,10 +155,11 @@ private :
         coordinate_type column, coordinate_type row) const;
 
     canvas &canvas_;
+    render_surface_capabilities const &capabilities_;
     extent  offset_;
 };
 
 TERMINALPP_EXPORT
-std::ostream &operator<<(std::ostream &out, canvas_view::row_proxy const &row);
+std::ostream &operator<<(std::ostream &out, render_surface::row_proxy const &row);
 
 }
