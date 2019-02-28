@@ -28,13 +28,13 @@ include (GenerateExportHeader)
 find_package(Doxygen)
 
 if (TERMINALPP_SANITIZE)
-    list(APPEND CMAKE_CXX_FLAGS "-fsanitize=${TERMINALPP_SANITIZE}")
-    list(APPEND CMAKE_EXE_LINKER_FLAGS "-fsanitize=${TERMINALPP_SANITIZE}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=${TERMINALPP_SANITIZE}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${TERMINALPP_SANITIZE}")
 endif()
 
 if (TERMINALPP_COVERAGE)
-    list(APPEND CMAKE_CXX_FLAGS "--coverage -g -O0")
-    list(APPEND CMAKE_EXE_LINKER_FLAGS "--coverage")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -g -O0")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 endif()
 
 set(TERMINALPP_SOURCE_FILES
